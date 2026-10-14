@@ -1,0 +1,12 @@
+{
+	"users": [
+		{
+			"id": "1",
+			"name": "user1",
+			"email": "demo@flightapp.dev",
+			"password": "password123"
+		}
+	],
+	"resectSearches": [],
+	"favorites": []
+}
