@@ -1,10 +1,15 @@
 import { Assets as NavigationAssets } from '@react-navigation/elements';
-import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { Asset } from 'expo-asset';
 import { createURL } from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
 import { Navigation } from './navigation';
+import { useFonts, Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
+import { useAppTheme } from './theme/useAppTheme';
+import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './app/store';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 Asset.loadAsync([...NavigationAssets]);
 
@@ -15,18 +20,35 @@ const linking = {
 	prefixes: [createURL('/')],
 };
 
-export function App() {
-	const colorScheme = useColorScheme();
-
-	const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme;
+function ThemedApp() {
+	const { navigationTheme, dark } = useAppTheme();
 
 	return (
-		<Navigation
-			theme={theme}
-			linking={linking}
-			onReady={() => {
-				SplashScreen.hideAsync();
-			}}
-		/>
+		<>
+			<StatusBar style={dark ? 'light' : 'dark'} />
+			<Navigation
+				theme={navigationTheme}
+				linking={linking}
+				onReady={() => {
+					SplashScreen.hideAsync();
+				}}
+			/>
+		</>
+	);
+}
+
+export function App() {
+	const [loaded] = useFonts({ Inter_400Regular, Inter_600SemiBold, Inter_700Bold });
+
+	if (!loaded) return null;
+
+	return (
+		<SafeAreaProvider>
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<ThemedApp />
+				</PersistGate>
+			</Provider>
+		</SafeAreaProvider>
 	);
 }

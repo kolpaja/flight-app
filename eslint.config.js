@@ -8,4 +8,11 @@ module.exports = defineConfig([
 	{
 		ignores: ['dist/*'],
 	},
+	{
+		rules: {
+			'func-style': 'off',
+			'prefer-arrow-callback': 'off',
+			'object-shorthand': 'off',
+		},
+	},
 ]);

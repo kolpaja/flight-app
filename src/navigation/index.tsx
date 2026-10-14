@@ -9,32 +9,33 @@ import MoreScreen from '../screens/MoreScreen';
 import { NotFound } from '../screens/NotFound';
 import PlaceholderScreen from '../screens/PlaceholderScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { useAppSelector } from '../app/hooks';
 
-// TODO replace with redux auth state
-const useIsSignedIn = () => true;
+// ? Sync and Check the signed-in user from persisted state
+const useIsSignedIn = () => useAppSelector((state) => state.auth.user !== null);
 const useIsSignedOut = () => !useIsSignedIn();
 
 const HomeStack = createNativeStackNavigator({
 	screens: {
-		Home: createNativeStackScreen({ screen: HomeScreen, options: { title: 'Search Flights' } }),
+		Home: createNativeStackScreen({ screen: HomeScreen, options: { title: 'Search Flights', headerShown: false } }),
 	},
 });
 
 const FavoritesStack = createNativeStackNavigator({
 	screens: {
-		Favorites: createNativeStackScreen({ screen: FavoriteScreen, options: { title: 'Favorites' } }),
+		Favorites: createNativeStackScreen({ screen: FavoriteScreen, options: { title: 'Favorites', headerShown: false } }),
 	},
 });
 
 const ProfileStack = createNativeStackNavigator({
 	screens: {
-		Profile: createNativeStackScreen({ screen: ProfileScreen, options: { title: 'Profile' } }),
+		Profile: createNativeStackScreen({ screen: ProfileScreen, options: { title: 'Profile', headerShown: false } }),
 	},
 });
 
 export const MoreStack = createNativeStackNavigator({
 	screens: {
-		More: createNativeStackScreen({ screen: MoreScreen }),
+		More: createNativeStackScreen({ screen: MoreScreen, options: { headerShown: false } }),
 		Settings: createNativeStackScreen({ screen: PlaceholderScreen }),
 		Help: createNativeStackScreen({ screen: PlaceholderScreen }),
 		About: createNativeStackScreen({ screen: PlaceholderScreen }),
@@ -104,5 +105,6 @@ export const Navigation = createStaticNavigation(RootStack);
 type RootStackType = typeof RootStack;
 
 declare module '@react-navigation/native' {
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 	interface RootNavigator extends RootStackType {}
 }

@@ -8,6 +8,10 @@ export type User = {
 	email: string;
 };
 
+export interface UserRecord extends User {
+	password: string;
+}
+
 export interface Airport {
 	code: string;
 	name: string;
@@ -36,3 +40,5 @@ export interface SearchCriteria {
 	departDate: string;
 	returnDate: string;
 }
+
+export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed';

@@ -77,7 +77,7 @@ src/
 ## Architecture decisions and trade-offs
 
 **Expo (managed workflow).** There is no native setup, and the app runs on a phone through Expo Go.
-The trade-off is that native modules outside the Expo ecosystem need a dev build.
+The trade-off is that if i need any native modules outside the Expo ecosystem need a dev build.
 
 **json-server as the backend.** It gives a real REST API with persistence in about 10 minutes, so the networking layer is exercised against HTTP instead of in-memory fixtures.
 The trade-off is that there is no real auth, validation or relations. `db.json` is also mutated at runtime, so `db.seed.json` is kept as the source of truth and `api:reset` restores it.

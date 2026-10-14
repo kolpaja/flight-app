@@ -1,11 +1,11 @@
-import { View } from 'react-native';
 import { AppText } from '../components/AppText';
+import { Screen } from '../components/Screen';
 
 const FavoriteScreen = () => {
 	return (
-		<View>
+		<Screen>
 			<AppText>FavoriteScreen</AppText>
-		</View>
+		</Screen>
 	);
 };
 
