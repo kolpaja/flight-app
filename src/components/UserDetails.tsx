@@ -1,9 +1,7 @@
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppSelector } from '../app/hooks';
 import { AppText } from './AppText';
 import AppView from './AppView';
-import { logout } from '../features/auth/authSlice';
 import { spacing } from '../theme/colors';
-import { Button } from './Button';
 import { Avatar } from './UserAvatar';
 
 const UserDetails = () => {
