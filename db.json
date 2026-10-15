@@ -23,8 +23,8 @@
       "departDate": "2026-10-22",
       "returnDate": "2026-10-31",
       "userId": "1",
-      "createdAt": "2026-10-15T13:09:17.970Z",
-      "id": 4
+      "createdAt": "2026-10-15T14:01:44.470Z",
+      "id": 5
     }
   ],
   "favorites": [
@@ -45,6 +45,42 @@
         "status": "On Time"
       },
       "id": 1
+    },
+    {
+      "userId": "1",
+      "flight": {
+        "id": "LX7646-2026-10-22",
+        "flightNumber": "LX7646",
+        "airline": "Swiss",
+        "origin": "TIA",
+        "destination": "FCO",
+        "departureTime": "2026-10-22T11:15",
+        "arrivalTime": "2026-10-22T13:43",
+        "durationMinutes": 148,
+        "aircraft": "Embraer E195",
+        "terminal": "3",
+        "gate": "C25",
+        "status": "On Time"
+      },
+      "id": 2
+    },
+    {
+      "userId": "1",
+      "flight": {
+        "id": "FR1303-2026-10-22",
+        "flightNumber": "FR1303",
+        "airline": "Ryanair",
+        "origin": "TIA",
+        "destination": "FCO",
+        "departureTime": "2026-10-22T16:25",
+        "arrivalTime": "2026-10-22T18:58",
+        "durationMinutes": 153,
+        "aircraft": "Airbus A321",
+        "terminal": "1",
+        "gate": "B1",
+        "status": "Scheduled"
+      },
+      "id": 4
     }
   ]
 }
