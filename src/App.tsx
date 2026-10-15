@@ -11,6 +11,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './app/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useLoadUserData } from './hooks/useLoadUserData';
+import * as SystemUI from 'expo-system-ui';
+import { useEffect } from 'react';
 
 Asset.loadAsync([...NavigationAssets]);
 
@@ -22,8 +24,11 @@ const linking = {
 };
 
 function ThemedApp() {
-	const { navigationTheme, dark } = useAppTheme();
+	const { navigationTheme, dark, colors } = useAppTheme();
 	useLoadUserData();
+	useEffect(() => {
+		SystemUI.setBackgroundColorAsync(colors.background);
+	}, [colors.background]);
 	return (
 		<>
 			<StatusBar style={dark ? 'light' : 'dark'} />
