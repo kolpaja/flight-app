@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { reducers } from './rootReducers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
-import devtoolsEnhancer from 'redux-devtools-expo-dev-plugin';
 
 const persistedReducers = {
 	...reducers,
@@ -14,12 +13,26 @@ const persistedReducers = {
 		},
 		reducers.auth,
 	),
+	theme: persistReducer(
+		{
+			key: 'theme',
+			storage: AsyncStorage,
+			whitelist: ['mode'],
+		},
+		reducers.theme,
+	),
 };
 
 export const store = configureStore({
 	reducer: persistedReducers,
 	devTools: false,
-	enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(devtoolsEnhancer()),
+	enhancers: (getDefaultEnhancers) => {
+		const defaults = getDefaultEnhancers();
+		if (!__DEV__) return defaults;
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		const devtoolsEnhancer = require('redux-devtools-expo-dev-plugin').default;
+		return defaults.concat(devtoolsEnhancer());
+	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {

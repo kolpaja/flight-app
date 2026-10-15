@@ -34,6 +34,7 @@
     "expo-linking": "~57.0.12",
     "expo-splash-screen": "~57.0.10",
     "expo-status-bar": "~57.0.1",
+    "lodash.isequal": "^4.5.0",
     "rand-seed": "^3.0.0",
     "react": "19.2.3",
     "react-native": "0.86.3",
@@ -46,6 +47,7 @@
   "devDependencies": {
     "@testing-library/react-native": "^14.1.0",
     "@types/jest": "^29.5.14",
+    "@types/lodash.isequal": "^4.5.8",
     "@types/react": "~19.2.2",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~57.0.2",
@@ -63,8 +65,13 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.ts"
     ],
+    "moduleNameMapper": {
+      "^immer$": "<rootDir>/node_modules/immer/dist/cjs/index.js",
+      "^react-redux$": "<rootDir>/node_modules/react-redux/dist/cjs/index.js"
+    },
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
+      "!src/**/__tests__/**",
       "!src/**/*.test.{ts,tsx}",
       "!src/test/**",
       "!src/types/**"

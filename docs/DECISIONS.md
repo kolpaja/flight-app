@@ -16,3 +16,5 @@ I am using a theme folder to store all the colors and fonts and spacing and othe
 
 ### 5. Redux Toolkit
 I am using Redux Toolkit for state management and redux-persist to persist the state in the local storage. 
+
+### 6. 

@@ -1,4 +1,6 @@
-import { FlightStatus } from './flightStatuses';
+import type { ComponentProps } from 'react';
+import type { FlightStatus } from './flightStatuses';
+import type { Ionicons } from '@expo/vector-icons';
 
 export type RecordId = string | number;
 
@@ -34,11 +36,25 @@ export interface Flight {
 	status: FlightStatus;
 }
 
-export interface SearchCriteria {
+export type SearchCriteria = {
 	origin: string;
 	destination: string;
 	departDate: string;
 	returnDate: string;
+};
+
+export interface RecentSearch extends SearchCriteria {
+	id: RecordId;
+	userId: RecordId;
+	createdAt: string;
+}
+
+export interface FavoriteFlight {
+	id: RecordId;
+	userId: RecordId;
+	flight: Flight;
 }
 
 export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
+
+type IconName = ComponentProps<typeof Ionicons>['name'];

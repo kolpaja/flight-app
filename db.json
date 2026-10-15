@@ -1,12 +1,50 @@
 {
-	"users": [
-		{
-			"id": "1",
-			"name": "user1",
-			"email": "demo@flightapp.dev",
-			"password": "password123"
-		}
-	],
-	"resectSearches": [],
-	"favorites": []
+  "users": [
+    {
+      "id": "1",
+      "name": "user1",
+      "email": "demo@flightapp.dev",
+      "password": "password123"
+    }
+  ],
+  "resentSearches": [
+    {
+      "origin": "TIA",
+      "destination": "FCO",
+      "departDate": "2026-10-22",
+      "returnDate": "2026-10-29",
+      "userId": "1",
+      "createdAt": "2026-10-15T12:55:22.194Z",
+      "id": 1
+    },
+    {
+      "origin": "TIA",
+      "destination": "FCO",
+      "departDate": "2026-10-22",
+      "returnDate": "2026-10-31",
+      "userId": "1",
+      "createdAt": "2026-10-15T13:09:17.970Z",
+      "id": 4
+    }
+  ],
+  "favorites": [
+    {
+      "userId": "1",
+      "flight": {
+        "id": "TK5028-2026-10-22",
+        "flightNumber": "TK5028",
+        "airline": "Turkish Airlines",
+        "origin": "TIA",
+        "destination": "FCO",
+        "departureTime": "2026-10-22T07:55",
+        "arrivalTime": "2026-10-22T10:33",
+        "durationMinutes": 158,
+        "aircraft": "Airbus A321",
+        "terminal": "3",
+        "gate": "B22",
+        "status": "On Time"
+      },
+      "id": 1
+    }
+  ]
 }

@@ -36,8 +36,8 @@ function pickWeighted<T>(entries: readonly (readonly [T, number])[], random: () 
  * mock API for the flights for like 4-6 departing flights
  */
 export function generateFlights(criteria: SearchCriteria): Flight[] {
-	const { origin, destination, departDate } = criteria;
-	const rand = new Rand(`${origin}-${destination}-${departDate}`);
+	const { origin, destination, departDate, returnDate } = criteria;
+	const rand = new Rand(`${origin}-${destination}-${departDate}-${returnDate}`);
 	const random = () => rand.next();
 
 	const count = 4 + Math.floor(random() * 3);

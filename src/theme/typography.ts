@@ -4,4 +4,4 @@ export const fontFamily = {
 	bold: 'Inter_700Bold',
 } as const;
 
-export const fontSize = { title: 32, body: 16, caption: 14 } as const;
+export const fontSize = { title: 32, heading: 18, body: 16, caption: 14 } as const;

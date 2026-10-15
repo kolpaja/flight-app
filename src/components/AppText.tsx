@@ -1,15 +1,16 @@
 import { Text, type TextProps, type TextStyle } from 'react-native';
 
 import { useAppTheme } from '../theme/useAppTheme';
+import { fontFamily, fontSize } from '../theme/typography';
 
 type Variant = 'title' | 'heading' | 'body' | 'caption' | 'label';
 
 const VARIANTS: Record<Variant, TextStyle> = {
-	title: { fontSize: 28, fontWeight: '700', letterSpacing: -0.4 },
-	heading: { fontSize: 18, fontWeight: '600' },
-	body: { fontSize: 16, fontWeight: '400' },
-	caption: { fontSize: 13, fontWeight: '400' },
-	label: { fontSize: 13, fontWeight: '600', letterSpacing: 0.3 },
+	title: { fontSize: fontSize.title, fontFamily: fontFamily.bold, letterSpacing: -0.4 },
+	heading: { fontSize: fontSize.heading, fontFamily: fontFamily.semibold },
+	body: { fontSize: fontSize.body, fontFamily: fontFamily.regular },
+	caption: { fontSize: fontSize.caption, fontFamily: fontFamily.regular },
+	label: { fontSize: fontSize.caption, fontFamily: fontFamily.semibold, letterSpacing: 0.3 },
 };
 
 interface Props extends TextProps {

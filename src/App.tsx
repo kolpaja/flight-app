@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './app/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useLoadUserData } from './hooks/useLoadUserData';
 
 Asset.loadAsync([...NavigationAssets]);
 
@@ -22,7 +23,7 @@ const linking = {
 
 function ThemedApp() {
 	const { navigationTheme, dark } = useAppTheme();
-
+	useLoadUserData();
 	return (
 		<>
 			<StatusBar style={dark ? 'light' : 'dark'} />
@@ -38,9 +39,10 @@ function ThemedApp() {
 }
 
 export function App() {
-	const [loaded] = useFonts({ Inter_400Regular, Inter_600SemiBold, Inter_700Bold });
+	const [loaded, fontError] = useFonts({ Inter_400Regular, Inter_600SemiBold, Inter_700Bold });
+	if (fontError) console.warn('Font load failed:', fontError);
 
-	if (!loaded) return null;
+	if (!loaded && !fontError) return null;
 
 	return (
 		<SafeAreaProvider>

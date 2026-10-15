@@ -25,7 +25,7 @@ export function Screen({ children, isCentered = false, isKeyboard = false, isScr
 		<AppView style={[{ flex: 1 }, contentStyles]}>{children}</AppView>
 	);
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+		<SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={edges}>
 			<KeyboardAvoidingView style={{ flex: 1 }} behavior={isKeyboard && Platform.OS === 'ios' ? 'padding' : undefined} enabled={isKeyboard}>
 				{body}
 			</KeyboardAvoidingView>

@@ -1,43 +1,72 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { AppText } from '../components/AppText';
-import { generateFlights } from '../data/mockFlights';
-import { formatDuration, formatTime } from '../utils/date';
 import { spacing } from '../theme/colors';
-import { Screen } from '../components/Screen';
 import AppView from '../components/AppView';
+import { StaticParamList, useNavigation } from '@react-navigation/native';
+import { HomeStack } from '../navigation';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useCallback, useState } from 'react';
+import SearchForm, { createDefaultCriteria } from '../components/SearchForm';
+import { saveSearch } from '../features/searches/searchesSlice';
+import { RecentSearch, SearchCriteria } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import RecentSearchItem from '../components/RecentSearchItem';
+import { EmptyView } from '../components/EmptyView';
+import { MAX_SEARCHED_ITEMS } from '../utils/recent-searches';
+import { Separator } from '../components/StatusView';
 
-const flights = generateFlights({ origin: 'TIA', destination: 'FCO', departDate: '2026-10-20', returnDate: '2026-10-25' });
+type HomeParamList = StaticParamList<typeof HomeStack>;
 
 const HomeScreen = () => {
+	const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
+
+	const dispatch = useAppDispatch();
+
+	const userId = useAppSelector((state) => state.auth.user?.id);
+	const recent = useAppSelector((state) => state.searches.items);
+
+	const [draft, setDraft] = useState(createDefaultCriteria);
+
+	const handleSubmit = useCallback(
+		(criteria: SearchCriteria) => {
+			if (userId !== undefined) dispatch(saveSearch({ userId, criteria }));
+			navigation.navigate('SearchResults', criteria);
+		},
+		[dispatch, navigation, userId],
+	);
+
+	const preFill = useCallback((search: RecentSearch) => {
+		setDraft({
+			origin: search.origin,
+			destination: search.destination,
+			departDate: search.departDate,
+			returnDate: search.returnDate,
+		});
+	}, []);
+
 	return (
-		<Screen>
-			<AppText style={{ textAlign: 'center' }}>HomeScreen </AppText>
-			<AppText variant='caption'> Temp working list of flights search</AppText>
-			<FlatList
-				data={flights}
-				keyExtractor={(flight) => flight.id}
-				contentContainerStyle={styles.list}
-				renderItem={({ item }) => (
-					<AppView style={{ padding: 12, gap: 4 }}>
-						<AppText>
-							{item.airline} {item.flightNumber}
-						</AppText>
-						<AppText>
-							{formatTime(item.departureTime)} → {formatTime(item.arrivalTime)} ({formatDuration(item.durationMinutes)})
-						</AppText>
-						<AppText>
-							{item.status} · Terminal {item.terminal} · Gate {item.gate}
-						</AppText>
-					</AppView>
-				)}
-			/>
-		</Screen>
+		<FlatList
+			contentContainerStyle={styles.content}
+			data={recent}
+			keyExtractor={(item) => String(item.id)}
+			keyboardShouldPersistTaps='handled'
+			keyboardDismissMode='on-drag'
+			ListHeaderComponent={
+				<AppView style={styles.header}>
+					<SearchForm value={draft} onChange={setDraft} onSubmit={handleSubmit} />
+					<AppText variant='heading'>Recent searches:</AppText>
+				</AppView>
+			}
+			renderItem={({ item }) => <RecentSearchItem search={item} onPress={preFill} />}
+			ItemSeparatorComponent={Separator}
+			ListEmptyComponent={<EmptyView icon='time-outline' title='No recent searches' message={`Your last ${MAX_SEARCHED_ITEMS} searches will show up here.`} />}
+		/>
 	);
 };
 
 const styles = StyleSheet.create({
-	list: { padding: spacing.lg, gap: spacing.sm },
-	row: { gap: spacing.xs },
+	content: { padding: spacing.lg, paddingBottom: spacing.xl, gap: spacing.lg },
+	header: { gap: spacing.lg, marginBottom: spacing.md },
 });
 
 export default HomeScreen;

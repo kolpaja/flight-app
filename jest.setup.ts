@@ -5,3 +5,12 @@ jest.mock('@react-native-async-storage/async-storage', () => require('@react-nat
 
 // Icons load fonts asynchronously, which triggers act() warnings. Components only need a placeholder in unit tests.
 jest.mock('@expo/vector-icons', () => ({ Ionicons: () => null }));
+jest.mock('redux-devtools-expo-dev-plugin', () => ({
+	__esModule: true,
+	default: () => (createStore: unknown) => createStore,
+}));
+jest.mock('@react-native-community/datetimepicker', () => ({
+	__esModule: true,
+	default: () => null,
+	DateTimePickerAndroid: { open: jest.fn() },
+}));

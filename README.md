@@ -27,6 +27,9 @@ The app needs two processes, so use two terminals.
 
 ```bash
 # Terminal 1: mock API on port 3000
+npm run api:reset # resets the db and can start fresh data
+
+# Terminal 1: mock API on port 3000
 npm run api
 
 # Terminal 2: Expo dev server

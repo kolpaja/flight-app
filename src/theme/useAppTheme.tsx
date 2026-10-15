@@ -2,6 +2,7 @@ import { DarkTheme, DefaultTheme, type Theme } from '@react-navigation/native';
 import { AppColors, darkColors, lightColors } from './colors';
 import { useColorScheme } from 'react-native';
 import { useMemo } from 'react';
+import { useAppSelector } from '../app/hooks';
 
 export interface AppTheme {
 	dark: boolean;
@@ -10,8 +11,9 @@ export interface AppTheme {
 }
 
 export function useAppTheme(): AppTheme {
-	//TODO Temp for now, adding the selector after redux setup
-	const dark = useColorScheme() === 'dark';
+	const mode = useAppSelector((state) => state.theme.mode);
+	const systemTheme = useColorScheme();
+	const dark = mode === 'system' ? systemTheme === 'dark' : mode === 'dark';
 
 	return useMemo(() => {
 		const colors = dark ? darkColors : lightColors;

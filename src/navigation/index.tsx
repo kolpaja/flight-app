@@ -10,20 +10,33 @@ import { NotFound } from '../screens/NotFound';
 import PlaceholderScreen from '../screens/PlaceholderScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { useAppSelector } from '../app/hooks';
+import SearchResultScreen from '../screens/SearchResultScreen';
+import FlightDetailsScreen from '../screens/FlightDetailsScreen';
 
 // ? Sync and Check the signed-in user from persisted state
 const useIsSignedIn = () => useAppSelector((state) => state.auth.user !== null);
 const useIsSignedOut = () => !useIsSignedIn();
 
-const HomeStack = createNativeStackNavigator({
+const FlightDetails = createNativeStackScreen({
+	screen: FlightDetailsScreen,
+	options: ({ route }) => ({ title: route.params.flight.flightNumber }),
+});
+
+export const HomeStack = createNativeStackNavigator({
 	screens: {
-		Home: createNativeStackScreen({ screen: HomeScreen, options: { title: 'Search Flights', headerShown: false } }),
+		Home: createNativeStackScreen({ screen: HomeScreen, options: { title: 'Search Flights' } }),
+		SearchResults: createNativeStackScreen({
+			screen: SearchResultScreen,
+			options: ({ route }) => ({ title: `${route.params.origin} -> ${route.params.destination}` }),
+		}),
+		FlightDetails,
 	},
 });
 
-const FavoritesStack = createNativeStackNavigator({
+export const FavoritesStack = createNativeStackNavigator({
 	screens: {
-		Favorites: createNativeStackScreen({ screen: FavoriteScreen, options: { title: 'Favorites', headerShown: false } }),
+		Favorites: createNativeStackScreen({ screen: FavoriteScreen, options: { title: 'Favorites' } }),
+		FlightDetails,
 	},
 });
 
@@ -35,7 +48,7 @@ const ProfileStack = createNativeStackNavigator({
 
 export const MoreStack = createNativeStackNavigator({
 	screens: {
-		More: createNativeStackScreen({ screen: MoreScreen, options: { headerShown: false } }),
+		More: createNativeStackScreen({ screen: MoreScreen }),
 		Settings: createNativeStackScreen({ screen: PlaceholderScreen }),
 		Help: createNativeStackScreen({ screen: PlaceholderScreen }),
 		About: createNativeStackScreen({ screen: PlaceholderScreen }),
